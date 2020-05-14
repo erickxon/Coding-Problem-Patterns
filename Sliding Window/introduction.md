@@ -82,11 +82,13 @@
     }
 ```
 
-
-    
 **Time Complexity**: O(N)
 
-    
+By implementing sliding window, we have reduced the runtime from O(N*K) to O(N)
+
+
+
+#Smallest Subarray with a given sum;
 
     
     
