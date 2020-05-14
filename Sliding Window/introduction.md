@@ -22,7 +22,7 @@
 
 ### bruteforce.java
 
-
+```java
     import java.util.Arrays;
 
     class AverageOfSubarrayOfSizeK {
@@ -45,7 +45,7 @@
             System.out.println("Averages of subarrays of size K: " + Arrays.toString(result));
         }
     }
- 
+ ```
     
     
 **Time Complexity**: O(N*K)
@@ -62,7 +62,7 @@
     * add the edge going in (right)
     ![slidingwindow](./slidingwindow.png)
 
-**findAverages**
+```java
   public static double[] findAverages(int K, int[] arr){
     double[] result = new double[arr.length - K + 1];
     double windowSum = 0;
@@ -80,6 +80,7 @@
         }
     return result;
     }
+```
 
 
     
