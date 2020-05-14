@@ -88,7 +88,62 @@ By implementing sliding window, we have reduced the runtime from O(N*K) to O(N)
 
 
 
-#Smallest Subarray with a given sum;
+# Smallest Subarray with a given sum
 
+```
+Given an array of postiive numbers and a postive number 'S', find the length of the smallest contiguous subarray whose sum is greater than or equal to 'S'
+```
+
+```
+Input: [2, 1, 5, 2, 3, 2], S=7 
+Output: 2
+Explanation: The smallest subarray with a sum great than or equal to '7' is [5, 2].
+```
+
+Notes:
+<list>
+- This is a sliding window problem but the sliding window is dynamic
+1. add the elements from index 0 to an index that makes the sum greater or equal to 'S'
+2. This will be the initial sliding window; we must also keep track of the length of this window (initially, it will be the smallest)
+3. Then slide the window from the beginning until the sum is smaller than S. <br>
+a. when shrinking from the beginning, check if window is smaller than smallest length so far
+<br>
+b. when shrinking, subtract the removed item from the sum
+</list>
+```java
+class SmallestSubArrayWithGivenSum {
+  public static int findMinSubArray(int S, int[] arr) {
+    // TODO: Write your code here
+    int windowSum = 0, minLength = Integer.MAX_VALUE;
+    int windowStart = 0;
+
+    for(int windowEnd = 0;windowEnd< arr.length; windowEnd++){
+        windowSum+=arr[windowEnd];
+        while(windowSum>=S){
+            minLength = Math.min(minLength,windowEnd-windowStart+1);
+            windowSum -= arr[windowStart];
+            windowStart++;
+        }
+    }
+
+    return minLength == Integer.MAX_VALUE?0:minLength;
+  }
+
+  public static void main(String[] args) {
+    int result = SmallestSubArrayWithGivenSum.findMinSubArray(7, new int[] { 2, 1, 5, 2, 3, 2 });
+    System.out.println("Smallest subarray length: " + result);
+    result = SmallestSubArrayWithGivenSum.findMinSubArray(7, new int[] { 2, 1, 5, 2, 8 });
+    System.out.println("Smallest subarray length: " + result);
+    result = SmallestSubArrayWithGivenSum.findMinSubArray(8, new int[] { 3, 4, 1, 1, 6 });
+    System.out.println("Smallest subarray length: " + result);
+  }
+}
+
+```
     
+**Time Complexity**: O(N)
+- the outer for loop runs for all elements
+- the inner while loop processes each element only once
+
+
     
