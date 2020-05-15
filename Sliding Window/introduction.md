@@ -110,6 +110,7 @@ a. when shrinking from the beginning, check if window is smaller than smallest l
 <br>
 b. when shrinking, subtract the removed item from the sum
 </list>
+
 ```java
 class SmallestSubArrayWithGivenSum {
   public static int findMinSubArray(int S, int[] arr) {
@@ -146,4 +147,61 @@ class SmallestSubArrayWithGivenSum {
 - the inner while loop processes each element only once
 
 
+# Longest Substring with K Distinct Characters
+
+```
+Given a string, find the length of the longest substring in it with no more than K distinct characters
+```
+```
+Input: String="cbbebi", K=3
+Output: 5
+Explanation: The longest substrings with no more than '3' distinct characters are "cbbeb" & "bbebi".
+```
+
+## Solution
+```
+* use a hashmap to remember the frequency of each character that has been processed
+1. insert characters from the beginning of the string until 'K' distinct characters in Hashmap
+2. These characters are the sliding window; they cannot exceed K distinct characters; we will remember the length of this window as the longest window so far
+3. we will add one character in the sliding window (slide window ahead) one by one
+4. in each step, we will try to shrink the window from the beginning if the count of the distinct characters in the HashMap is larger than 'K'. We will shrink until we have no more than 'K' distinct characters in the HahMap;
+5. While shrinking, we'll decrement the frequency of the character going out of the window and remove it from the HashMap if its frequency becomes zero.
+6. At the end of each step, we'll check if the current window length is the longest so far, and if so, remember its length.
+```
+
+```java
+import java.util.*;
+
+class LongestSubstringKDistinct {
+  public static int findLength(String str, int k) {
+    if (str==null||str.length() ==0 || str.length() < k)
+        throw new IllegalArgumentException();
+
+    int windowStart=0,maxLength=0;
+    Map<Character,Integer> charFrequencyMap = new HashMap<>();
+    //in the following loop, we try to extend the range [windowStart,windowEnd]
+    for(int windowEnd=0;windowEnd<str.length();windowEnd++){
+      char rightChar = str.charAt(windowEnd);
+      charFrequencyMap.put(rightChar,charFrequencyMap.getOrDefault(rightChar,0)+1); //getOrDefault: if it doesn't exist... add it with this value!!!
+      //shrink the sliding window until we are left with 'k' distinct characters in the frequency map
+      while(charFrequencyMap.size()>k){
+        char leftChar = str.charAt(windowStart);
+        charFrequencyMap.put(leftChar,charFrequencyMap.get(leftChar)-1);
+        if(charFrequencyMap.get(leftChar)==0){
+          charFrequencyMap.remove(leftChar);
+        }
+        windowStart++;
+      }
+      maxLength = Math.max(maxLength,windowEnd-windowStart+1);
+    }
+    return maxLength;
+    }
+
+  }
+
+
+```
+**Time Complexity**: O(N)
+<br>
+**Space Complexity**: O(K)
     
