@@ -205,3 +205,82 @@ class LongestSubstringKDistinct {
 <br>
 **Space Complexity**: O(K)
     
+
+
+# Fruits into Baskets
+```
+Given an array of characters where each character represents a fruit tree, you are given two baskets and your goal is to put maximum number of fruits in each basket. The only restriction is that each basket can have only one type of fruit.
+
+You can start with a tree, but once you have started you can't skip a tree. You will pick one fruit from each tree until you cannot, i.e. you will stop when you have to pick from a third type of fruit.
+Write a function to return the maximum number of fruits in both the baskets.
+```
+
+```
+Input: Fruit=['A', 'B', 'C', 'A', 'C']
+Output: 3
+Explanation: We can put 2 'C' in one basket and one 'A' in the other from the subarray ['C', 'A', 'C']
+```
+
+## Solution
+- this problem is similar to Longest Substring with K Distinct Characters
+- we need to find the length of the longest subarray with no more than two distinct characters (or two fruit types)
+- transforms the current problem into K Distinct characters with K =2
+
+**Time Complexity**: O(N)
+
+**Space Complexity** O(1); constant space used by the HashMap; cannot exceed 2 fruits.
+
+
+# No Repeat Character Substring
+```
+Given a string, find the length of the longest substring which has no repeating characters.
+```
+
+```
+Input: String="aabccbb"
+Output: 3
+Explanation: The longest substring without any repeating characters is "abc".
+```
+
+## Solution
+- we can use a dynamic sliding window strategy
+- Use a HashMap to remember the last index of each character we have processed
+- whenever we get a repeating character, we will shrink our sliding window to ensure that we always have distinct characters in the sliding window
+
+```java
+import java.util.*;
+
+class NoRepeatSubstring {
+  public static int findLength(String str) {
+    int windowStart=0, maxLength=0;
+        //key: character
+    //value: last index
+    Map<Character,Integer> charIndexMap = new HashMap<>();
+    //try to extend the range [windowStart,windowEnd]
+    for(int windowEnd = 0; windowEnd < str.length();windowEnd++){
+      char rightChar = str.charAt(windowEnd);
+      //if the map already contains the 'rightChar', shrink the window from the beginning so that 
+      //we have only one occurence of 'rightChar'
+      if(charIndexMap.containsKey(rightChar)){
+        //this is tricky ; in the current window, we will not have any 'rightChar' after its previous index
+        //and if 'windowStart' is already ahead of the last index of 'rightChar', we'll keep 'windowStart'
+        windowStart=Math.max(windowStart,charIndexMap.get(rightChar)+1);
+            //starts a new sliding window
+            //eliminates the repeated character
+            //keep track of maxLength
+            //if it is 2nd occurence of a character, but is greater than the windowStart (no longer in the window), we keep the windowStart
+                //we will later replace the value of 'rightChar'key to the currentIndex outside of the ifStatement.
+      }
+      charIndexMap.put(rightChar, windowEnd); // insert 'rightChar' into the map verbatim
+      maxLength = Math.max(maxLength,windowEnd-windowStart+1); // remember the max length so far
+    }
+    return maxLength;
+  }
+  
+}
+
+```
+
+**Time Complexity** O(N)
+**Space Complexity** O(K), where K is the number of distinct characters in S
+
