@@ -12,7 +12,7 @@ class NoRepeatSubstring {
       //if the map already contains the 'rightChar', shrink the window from the beginning so that 
       //we have only one occurence of 'rightChar'
       if(charIndexMap.containsKey(rightChar)){
-        //this is tricky ; in the current window, we will not have any 'rightChar' after its previous index
+        //this is tricky ; in the current window, we will not have any 'rightChar' after its previous index>
         //and if 'windowStart' is already ahead of the last index of 'rightChar', we'll keep 'windowStart'
         windowStart=Math.max(windowStart,charIndexMap.get(rightChar)+1);
             //starts a new sliding window

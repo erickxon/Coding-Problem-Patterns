@@ -284,3 +284,17 @@ class NoRepeatSubstring {
 **Time Complexity** O(N)
 **Space Complexity** O(K), where K is the number of distinct characters in S
 
+# Longest Substring with Same Letters after Replacement
+```
+Given a string with lwoercase letters only, if you are allowed to replace no more than 'k' characters with any letter, find the length of the longest substring having the same letters after replacement.
+```
+```
+Input: String="aabccbb", k=2
+Output: 5
+Explanation: Replace the two 'c' with 'b' to have a longest repeating substring "bbbbb".
+```
+
+## Solution
+``` 
+
+```
